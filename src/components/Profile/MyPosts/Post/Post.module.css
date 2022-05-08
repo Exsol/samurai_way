@@ -1,7 +1,8 @@
-.item{
-    color:#fff;
+.item {
+    color: #fff;
 }
-.item img{
+
+.item img {
     display: inline-block;
     max-width: 50px;
     border-radius: 50%;

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Post from "./Post/Post";
+import Post from './Post/Post';
 import s from './MyPosts.module.css';
 
 class MyPosts extends Component {
@@ -15,8 +15,8 @@ class MyPosts extends Component {
                     <button>Удалить</button>
                 </div>
                 <div>
-                   <Post message={"How are you?"} likecouns={10}/>
-                   <Post message={"Hello world"} likecouns={1}/>
+                    <Post message={'How are you?'} likecouns={10}/>
+                    <Post message={'Hello world'} likecouns={1}/>
 
                 </div>
             </div>
