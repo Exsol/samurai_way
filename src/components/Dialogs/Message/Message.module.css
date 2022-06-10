@@ -1,0 +1,21 @@
+.message {
+
+}
+.myMessage{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-end;
+}
+.message span{
+    display: inline-block;
+    max-width: 300px;
+    background: #fff;
+    padding: 10px;
+    margin: 0px 10px;
+    border-radius: 12px;
+}
+.message img{
+    width: 50px;
+
+    border-radius: 50%;
+}

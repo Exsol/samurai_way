@@ -1,0 +1,9 @@
+.title{
+    color: #ffffff;
+    margin: 25px 0px 10px;
+    text-align: center;
+}
+.row{
+    display: flex;
+    justify-content: space-between;
+}

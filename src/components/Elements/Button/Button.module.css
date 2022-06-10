@@ -1,0 +1,14 @@
+.btnDefault{
+    background: royalblue;
+    border: solid 1px transparent;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin: 10px;
+}
+.btnDefault:hover{
+    background: white;
+    border: solid 1px royalblue;
+    color: royalblue;
+    cursor: pointer;
+}

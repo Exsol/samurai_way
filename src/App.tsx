@@ -8,25 +8,31 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
+import {AddPostFunctionType, stateType, updateNewPostTest, updateNewPostTestType} from './redux/state';
 
-function App() {
+type appPropsType={
+    state:stateType;
+    addPost:AddPostFunctionType
+    updateNewPostTest: updateNewPostTestType
+}
+function App(props:appPropsType) {
     return (
         <BrowserRouter>
             <div className="app-wrapper">
                 <Header/>
-                <Navbar/>
+                <Navbar friendsList={props.state.sideBar.friends}/>
 
 
                 <div className="app-wrapper-content">
-                    {/*<Dialogs/>*/}
-                    <Route path='/dialogs' component={Dialogs}/>
-                    <Route path='/profile' component={Profile}/>
-                    <Route path='/news' component={News}/>
-                    <Route path='/music' component={Music}/>
-                    <Route path='/settings' component={Settings}/>
-
-                    {/*<Profile/>*/}
+                    <Route path='/profile' render={ ()=><Profile addPost={props.addPost} updateNewPostTest={updateNewPostTest} postData={props.state.profilePage} />}/>
+                    <Route path='/news' render={News}/>
+                    <Route path='/music' render={Music}/>
+                    <Route path='/settings' render={Settings}/>
+                    <Route path='/dialogs' render={ ()=><Dialogs messageData={props.state.messageDataPage.messageData} dialogsData={props.state.messageDataPage.dialogsData}/> }/>
                 </div>
+
+
+
             </div>
         </BrowserRouter>
     );

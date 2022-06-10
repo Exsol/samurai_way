@@ -1,0 +1,76 @@
+<script>
+    let man = {
+        name: 'Ivan',
+        age: 22,
+        sayName(){
+            alert(this.name)
+        }
+    }
+    man.sayName()
+
+
+    let page ={
+        title: "Title",
+        content : '',
+        render(){
+            document.write(this.content)
+        }
+    }
+    page.content = "<div>Some content</div>";
+    page.render()
+
+    let page2 = {
+        title: "Title",
+        _content: ``,
+        setContent(content) {
+            this._content = content
+        },
+        getContent() {
+            return this._content
+        },
+        render: function () {
+            document.write(this._content)
+        }
+    }
+        //page._content = `<div>Conetent about React</div>`
+        page2.setContent(`<div>Conetent about React</div>`)
+        //console.log(page2._content)
+        console.log(page2.getContent())
+        page2.render()
+
+
+
+
+    let store={
+        _subscriber(){
+            console.log('no subscribers(observers)')
+        },
+        _state: {
+            firstName: 'Name',
+            lastName: "LastName"
+        },
+        getState(){
+            return this._state
+        },
+        subscribe(observer){
+            this._subscriber = observer
+        },
+        setFirstName(value){
+            this._state.firstName = value;
+            this._subscriber();
+        }
+    }
+
+    let state = store.getState();
+    store.setFirstName('Ivanov');
+    state = store.getState();
+
+    store.subscribe( ()=>{
+        debugger;
+        let state = store.getState()
+        renderPage(state);
+    } );
+
+    store.setFirstName("uo")
+
+</script>
