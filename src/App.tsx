@@ -20,7 +20,7 @@ function App(props:appPropsType) {
                 <Header/>
                 <Navbar friendsList={props.store._state.sideBar.friends}/>
                 <div className="app-wrapper-content">
-                    <Route path='/profile' render={ ()=><Profile addPost={props.store.addPost.bind(props.store)} updateNewPostTest={props.store.updateNewPostTest.bind(props.store)} postData={props.store._state.profilePage} />}/>
+                    <Route path='/profile' render={ ()=><Profile dispatch={props.store.dispatch.bind(props.store)}  postData={props.store._state.profilePage} />}/>
                     <Route path='/news' render={News}/>
                     <Route path='/music' render={Music}/>
                     <Route path='/settings' render={Settings}/>

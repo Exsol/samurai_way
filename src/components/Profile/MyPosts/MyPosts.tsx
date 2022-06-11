@@ -1,14 +1,13 @@
 import React, {ChangeEvent} from 'react';
 import Post from './Post/Post';
 import s from './MyPosts.module.css';
-import {AddPostFunctionType, profilePageType, updateNewPostTestType} from '../../../redux/state';
+import {dispatchActionType, profilePageType} from '../../../redux/state';
 
 
 type myPostsPropsType = {
     postData: profilePageType
-    addPost: AddPostFunctionType
     newPostText: string
-    updateNewPostTest: updateNewPostTestType
+    dispatch: (action: dispatchActionType) => void
 }
 
 const MyPosts = (props: myPostsPropsType) => {
@@ -18,12 +17,11 @@ const MyPosts = (props: myPostsPropsType) => {
     const newPostElement = React.createRef<HTMLTextAreaElement>()
     const addPost = () => {
         if (newPostElement.current) {
-            props.addPost()
+            props.dispatch({type: 'ADD-POST'})
         }
     }
-
-    const onChangeTextaret = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.updateNewPostTest(e.currentTarget.value)
+    const onChangeTextarea = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        props.dispatch({type: 'UPDATE-NEW-POST-TEXT', newText: e.currentTarget.value})
     }
     return (
         <div className={s.postsBlock}>
@@ -32,7 +30,7 @@ const MyPosts = (props: myPostsPropsType) => {
             </div>
             <div>
                 <div>
-                    <textarea value={props.newPostText} onChange={onChangeTextaret} ref={newPostElement}></textarea>
+                    <textarea value={props.newPostText} onChange={onChangeTextarea} ref={newPostElement}></textarea>
                 </div>
                 <div>
                     <button onClick={addPost}>Add post</button>
@@ -43,7 +41,6 @@ const MyPosts = (props: myPostsPropsType) => {
             </div>
         </div>
     );
-
 }
 
 export default MyPosts;
