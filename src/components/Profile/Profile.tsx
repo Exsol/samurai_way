@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React from 'react';
 import s from './Profile.module.css';
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from './ProfileInfo/ProfileInfo';
-import {AddPostFunctionType, dispatchActionType, profilePageType, updateNewPostTestType} from '../../redux/state';
+import {dispatchActionType, profilePageType} from '../../redux/state';
 
 
 type profileTypeProps = {

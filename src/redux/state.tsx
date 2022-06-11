@@ -1,39 +1,8 @@
-const ADD_POST = "ADD-POST";
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
-const ADD_MESSAGE = "ADD-MESSAGE";
-const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT";
-export type dispatchActionType =  addPostActionType | updateNewPostTextActionType | addNewMessageActionType | updateMessageTextActionType;
-type addPostActionType = ReturnType<typeof addPostActionCreator>
-type updateNewPostTextActionType = ReturnType<typeof updateNewPostTextCreator>
-type addNewMessageActionType = ReturnType<typeof addMessageActionCreator>
-type updateMessageTextActionType = ReturnType<typeof updateNewMessageActionCreator>
+import {messagesReducer, messagesReducerActionTypes} from './messages-reducer';
+import {profileReducer, profileReducerTypes} from './profile-reducer';
 
 
-export const addPostActionCreator = ()=>{
-    return {
-        type: ADD_POST
-    } as const
-}
-export const updateNewPostTextCreator = (newText:string)=>{
-    return{
-        type: UPDATE_NEW_POST_TEXT,
-        newText:newText
-    } as const
-}
-
-
-export const addMessageActionCreator = ()=>{
-    return{
-        type:ADD_MESSAGE,
-    } as const
-}
-
-export const updateNewMessageActionCreator = (message:string)=>{
-    return{
-        type:UPDATE_NEW_MESSAGE_TEXT,
-        message:message
-    } as const
-}
+export type dispatchActionType =  profileReducerTypes|messagesReducerActionTypes;
 
 
 export type AddPostFunctionType = () => void
@@ -65,7 +34,7 @@ export type friendType = {
 type sideBarType = {
     friends: Array<friendType>
 }
-type messagePageType = {
+export type messagePageType = {
     messageData: Array<messageDataType>
     dialogsData: Array<dialogsDataType>
     newMessageText: string
@@ -137,34 +106,10 @@ let store: storeType = {
         this._callSubscriber = observer
     },
     dispatch(action) {
-        switch (action.type) {
-            case ADD_POST:
-                const newPost = {
-                    id: new Date().getTime(),
-                    post: this._state.profilePage.newPostText,
-                    likesCount: 0,
-                }
-                this._state.profilePage.postData.unshift(newPost)
-                this._state.profilePage.newPostText = ''
-                this._callSubscriber();
-                break;
-            case UPDATE_NEW_POST_TEXT:
-                this._state.profilePage.newPostText = action.newText
-                this._callSubscriber()
-                break;
-            case UPDATE_NEW_MESSAGE_TEXT:
-                this._state.messageDataPage.newMessageText = action.message
-                this._callSubscriber()
-                break;
-            case ADD_MESSAGE:
-                const newMessage={id:new Date().getTime(), message: this._state.messageDataPage.newMessageText, itsMy: true, avatar: 'https://aretek.ru/images/pages/why4.png'}
-                this._state.messageDataPage.messageData.push(newMessage)
-                this._state.messageDataPage.newMessageText = ''
-                this._callSubscriber()
-                break;
-            default:
-                return action;
-        }
+        profileReducer(this._state.profilePage, action)
+        messagesReducer(this._state.messageDataPage, action)
+        this._callSubscriber()
+
     }
 }
 
