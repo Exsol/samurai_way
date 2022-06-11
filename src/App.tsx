@@ -20,11 +20,11 @@ function App(props:appPropsType) {
                 <Header/>
                 <Navbar friendsList={props.store._state.sideBar.friends}/>
                 <div className="app-wrapper-content">
-                    <Route path='/profile' render={ ()=><Profile dispatch={props.store.dispatch.bind(props.store)}  postData={props.store._state.profilePage} />}/>
+                    <Route path='/profile' render={ ()=><Profile dispatch={props.store.dispatch.bind(props.store)} postData={props.store._state.profilePage} />}/>
                     <Route path='/news' render={News}/>
                     <Route path='/music' render={Music}/>
                     <Route path='/settings' render={Settings}/>
-                    <Route path='/dialogs' render={ ()=><Dialogs messageData={props.store._state.messageDataPage.messageData} dialogsData={props.store._state.messageDataPage.dialogsData}/> }/>
+                    <Route path='/dialogs' render={ ()=><Dialogs dispatch={props.store.dispatch.bind(props.store)} messageText={props.store._state.messageDataPage.newMessageText} messageData={props.store._state.messageDataPage.messageData} dialogsData={props.store._state.messageDataPage.dialogsData}/> }/>
                 </div>
 
 

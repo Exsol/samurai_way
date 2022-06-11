@@ -1,3 +1,41 @@
+const ADD_POST = "ADD-POST";
+const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+const ADD_MESSAGE = "ADD-MESSAGE";
+const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT";
+export type dispatchActionType =  addPostActionType | updateNewPostTextActionType | addNewMessageActionType | updateMessageTextActionType;
+type addPostActionType = ReturnType<typeof addPostActionCreator>
+type updateNewPostTextActionType = ReturnType<typeof updateNewPostTextCreator>
+type addNewMessageActionType = ReturnType<typeof addMessageActionCreator>
+type updateMessageTextActionType = ReturnType<typeof updateNewMessageActionCreator>
+
+
+export const addPostActionCreator = ()=>{
+    return {
+        type: ADD_POST
+    } as const
+}
+export const updateNewPostTextCreator = (newText:string)=>{
+    return{
+        type: UPDATE_NEW_POST_TEXT,
+        newText:newText
+    } as const
+}
+
+
+export const addMessageActionCreator = ()=>{
+    return{
+        type:ADD_MESSAGE,
+    } as const
+}
+
+export const updateNewMessageActionCreator = (message:string)=>{
+    return{
+        type:UPDATE_NEW_MESSAGE_TEXT,
+        message:message
+    } as const
+}
+
+
 export type AddPostFunctionType = () => void
 export type updateNewPostTestType = (text: string) => void
 export type dialogsDataType = {
@@ -30,6 +68,7 @@ type sideBarType = {
 type messagePageType = {
     messageData: Array<messageDataType>
     dialogsData: Array<dialogsDataType>
+    newMessageText: string
 }
 export type stateType = {
     profilePage: profilePageType
@@ -40,19 +79,10 @@ export type storeType = {
     _state: stateType
     getState: () => stateType
     _callSubscriber: () => void
-    // updateNewPostTest: (text: string) => void
-    // addPost: () => void
     subscribe: (observer: () => void) => void
     dispatch: (action:dispatchActionType) => void
 }
-export type dispatchActionType =  addPostActionType | updateNewPostTextActionType;
-type addPostActionType ={
-    type : "ADD-POST"
-}
-type updateNewPostTextActionType = {
-    type: "UPDATE-NEW-POST-TEXT"
-    newText: string
-}
+
 let store: storeType = {
     _state: {
         profilePage: {
@@ -87,6 +117,7 @@ let store: storeType = {
                 {id: 4, name: 'Dmitrii'},
                 {id: 5, name: 'Vova'}
             ],
+            newMessageText: '',
         },
         sideBar: {
             friends: [
@@ -105,23 +136,9 @@ let store: storeType = {
     subscribe(observer: () => void) {
         this._callSubscriber = observer
     },
-    // updateNewPostTest(text: string) {
-    //     this._state.profilePage.newPostText = text
-    //     this._callSubscriber()
-    // },
-    // addPost() {
-    //     const newPost = {
-    //         id: new Date().getTime(),
-    //         post: this._state.profilePage.newPostText,
-    //         likesCount: 0,
-    //     }
-    //     this._state.profilePage.postData.unshift(newPost)
-    //     this._state.profilePage.newPostText = ''
-    //     this._callSubscriber()
-    // },
-    dispatch(action) {  //action {type:''}
+    dispatch(action) {
         switch (action.type) {
-            case 'ADD-POST':
+            case ADD_POST:
                 const newPost = {
                     id: new Date().getTime(),
                     post: this._state.profilePage.newPostText,
@@ -131,8 +148,18 @@ let store: storeType = {
                 this._state.profilePage.newPostText = ''
                 this._callSubscriber();
                 break;
-            case 'UPDATE-NEW-POST-TEXT':
+            case UPDATE_NEW_POST_TEXT:
                 this._state.profilePage.newPostText = action.newText
+                this._callSubscriber()
+                break;
+            case UPDATE_NEW_MESSAGE_TEXT:
+                this._state.messageDataPage.newMessageText = action.message
+                this._callSubscriber()
+                break;
+            case ADD_MESSAGE:
+                const newMessage={id:new Date().getTime(), message: this._state.messageDataPage.newMessageText, itsMy: true, avatar: 'https://aretek.ru/images/pages/why4.png'}
+                this._state.messageDataPage.messageData.push(newMessage)
+                this._state.messageDataPage.newMessageText = ''
                 this._callSubscriber()
                 break;
             default:
@@ -140,4 +167,7 @@ let store: storeType = {
         }
     }
 }
+
+
+
 export default store

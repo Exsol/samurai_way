@@ -1,17 +1,18 @@
 .message {
-
+    margin: 10px 0;
 }
 .myMessage{
     display: flex;
     flex-direction: row-reverse;
     align-items: flex-end;
+
 }
 .message span{
     display: inline-block;
     max-width: 300px;
     background: #fff;
     padding: 10px;
-    margin: 0px 10px;
+    margin: 0 10px;
     border-radius: 12px;
 }
 .message img{

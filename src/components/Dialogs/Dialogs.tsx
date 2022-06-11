@@ -1,30 +1,35 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css';
 import DialogItem from './Dialog/DialogItem';
 import Message from './Message/Message';
-import {AddPostFunctionType, dialogsDataType, messageDataType} from '../../redux/state';
+import {
+    addMessageActionCreator,
+    dialogsDataType,
+    dispatchActionType,
+    messageDataType,
+    updateNewMessageActionCreator
+} from '../../redux/state';
 import Button from '../Elements/Button/Button';
-
-
-
 
 type dialogTypeProps={
     dialogsData: Array<dialogsDataType>
     messageData: Array<messageDataType>
-
+    dispatch:(action:dispatchActionType)=>void
+    messageText:string
 }
 const Dialogs = (props:dialogTypeProps) => {
 
     let dialogsElement:JSX.Element[] = props.dialogsData.map(dialog=><DialogItem key={dialog.id} name={dialog.name} id={dialog.id} /> )
     let messageElements:JSX.Element[] = props.messageData.map(message=><Message key={message.id} avatar={message.avatar} itsMy={message.itsMy} message={message.message}  /> )
 
+    const addMessage=(e:ChangeEvent<HTMLTextAreaElement>)=>{
+        props.dispatch(updateNewMessageActionCreator(e.currentTarget.value))
+    }
 
     const newPostElement = React.createRef<HTMLTextAreaElement>()
     const addPost = () => {
-      //  if (newPostElement.current) props.addPost(newPostElement.current.value);
-
+            props.dispatch(addMessageActionCreator());
     }
-
     return (
         <div className={s.dialogs}>
 
@@ -36,12 +41,10 @@ const Dialogs = (props:dialogTypeProps) => {
                      {messageElements}
                     </div>
                     <div className={s.add_message}>
-                        <textarea ref={newPostElement} ></textarea>
+                        <textarea onChange={addMessage} value={props.messageText} ref={newPostElement}></textarea>
                         <Button name={"Add post"} callback={addPost}/>
                     </div>
                 </div>
-
-
         </div>
     );
 };

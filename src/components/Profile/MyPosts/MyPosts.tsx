@@ -1,8 +1,12 @@
 import React, {ChangeEvent} from 'react';
 import Post from './Post/Post';
 import s from './MyPosts.module.css';
-import {dispatchActionType, profilePageType} from '../../../redux/state';
-
+import {
+    addPostActionCreator,
+    dispatchActionType,
+    profilePageType,
+    updateNewPostTextCreator
+} from '../../../redux/state';
 
 type myPostsPropsType = {
     postData: profilePageType
@@ -17,11 +21,11 @@ const MyPosts = (props: myPostsPropsType) => {
     const newPostElement = React.createRef<HTMLTextAreaElement>()
     const addPost = () => {
         if (newPostElement.current) {
-            props.dispatch({type: 'ADD-POST'})
+            props.dispatch(addPostActionCreator())
         }
     }
     const onChangeTextarea = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch({type: 'UPDATE-NEW-POST-TEXT', newText: e.currentTarget.value})
+        props.dispatch(updateNewPostTextCreator(e.currentTarget.value))
     }
     return (
         <div className={s.postsBlock}>
