@@ -1,11 +1,11 @@
 import ReactDOM from 'react-dom';
 import App from './App';
-import {addPost, stateType, updateNewPostTest} from './redux/state';
+import store, {stateType} from './redux/state';
 import React from 'react';
 
-export const rerender = (state:stateType)=> {
+export const rerender = ()=> {
     ReactDOM.render(
-        <App addPost={addPost} updateNewPostTest={updateNewPostTest} state={state}/>,
+        <App store={store}/>,
         document.getElementById('root')
     );
 }

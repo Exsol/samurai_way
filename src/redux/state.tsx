@@ -1,13 +1,5 @@
-let rerender = ()=>{
-
-}
-export const subscribe = (observer:() => void) => {
-    rerender = observer
-}
-
-export type AddPostFunctionType = ()=>void
-export type updateNewPostTestType = (text:string)=>void
-
+export type AddPostFunctionType = () => void
+export type updateNewPostTestType = (text: string) => void
 export type dialogsDataType = {
     id: number,
     name: string
@@ -32,8 +24,8 @@ export type friendType = {
     name: string
     avatar: string
 }
-type sideBarType={
-    friends:Array<friendType>
+type sideBarType = {
+    friends: Array<friendType>
 }
 type messagePageType = {
     messageData: Array<messageDataType>
@@ -44,52 +36,77 @@ export type stateType = {
     messageDataPage: messagePageType
     sideBar: sideBarType
 }
-let state: stateType = {
-    profilePage: {
-        postData: [
-            {id: 1, post: 'How are you', likesCount: 12},
-            {id: 2, post: 'Hello world', likesCount: 2},
-            {id: 3, post: 'test', likesCount: 0}
-        ],
-        newPostText: "",
+export type storeType={
+    _state: stateType
+    getState: ()=>stateType
+    _callSubscriber: ()=>void
+    updateNewPostTest: (text: string)=>void
+    addPost: ()=>void
+    subscribe: (observer: () => void)=> void
+}
+let store:storeType = {
+    _state: {
+        profilePage: {
+            postData: [
+                {id: 1, post: 'How are you', likesCount: 12},
+                {id: 2, post: 'Hello world', likesCount: 2},
+                {id: 3, post: 'test', likesCount: 0}
+            ],
+            newPostText: '',
+        },
+        messageDataPage: {
+            messageData: [
+                {
+                    id: 1,
+                    message: 'How are you',
+                    itsMy: true,
+                    avatar: 'https://img1.freepng.ru/20180430/tbe/kisspng-computer-icons-avatar-user-profile-5ae6ea07935304.3879901915250826316035.jpg'
+                },
+                {id: 2, message: 'What you do', itsMy: false, avatar: 'https://aretek.ru/images/pages/why4.png'},
+                {
+                    id: 3,
+                    message: 'yol',
+                    itsMy: true,
+                    avatar: 'https://img1.freepng.ru/20180430/tbe/kisspng-computer-icons-avatar-user-profile-5ae6ea07935304.3879901915250826316035.jpg'
+                },
+                {id: 4, message: 'yol my', itsMy: false, avatar: 'https://aretek.ru/images/pages/why4.png'},
+            ],
+            dialogsData: [
+                {id: 1, name: 'Ivan'},
+                {id: 2, name: 'Viktor'},
+                {id: 3, name: 'Valera'},
+                {id: 4, name: 'Dmitrii'},
+                {id: 5, name: 'Vova'}
+            ],
+        },
+        sideBar: {
+            friends: [
+                {id: 1, name: 'Viktor', avatar: 'https://aretek.ru/images/pages/why4.png'},
+                {id: 2, name: 'Ivan', avatar: 'https://aretek.ru/images/pages/why4.png'},
+                {id: 3, name: 'Vova', avatar: 'https://aretek.ru/images/pages/why4.png'}
+            ]
+        }
     },
-    messageDataPage: {
-        messageData: [
-            {id: 1, message: 'How are you',itsMy:true,avatar:"https://img1.freepng.ru/20180430/tbe/kisspng-computer-icons-avatar-user-profile-5ae6ea07935304.3879901915250826316035.jpg"},
-            {id: 2, message: 'What you do',itsMy:false,avatar:"https://aretek.ru/images/pages/why4.png"},
-            {id: 3, message: 'yol',itsMy:true,avatar:"https://img1.freepng.ru/20180430/tbe/kisspng-computer-icons-avatar-user-profile-5ae6ea07935304.3879901915250826316035.jpg"},
-            {id: 4, message: 'yol my',itsMy:false,avatar:"https://aretek.ru/images/pages/why4.png"},
-        ],
-        dialogsData: [
-            {id: 1, name: 'Ivan'},
-            {id: 2, name: 'Viktor'},
-            {id: 3, name: 'Valera'},
-            {id: 4, name: 'Dmitrii'},
-            {id: 5, name: 'Vova'}
-        ],
+    getState(){
+        return this._state
     },
-    sideBar:{
-        friends:[
-             {id:1,name:"Viktor",avatar:"https://aretek.ru/images/pages/why4.png"},
-            {id:2,name:"Ivan",avatar:"https://aretek.ru/images/pages/why4.png"},
-            {id:3,name:"Vova",avatar:"https://aretek.ru/images/pages/why4.png"}
-        ]
+    _callSubscriber () {console.log('rerender')},
+    updateNewPostTest (text: string){
+        this._state.profilePage.newPostText = text
+        this._callSubscriber()
+    },
+    addPost() {
+        const newPost = {
+            id: new Date().getTime(),
+            post: this._state.profilePage.newPostText,
+            likesCount: 0,
+        }
+        this._state.profilePage.postData.unshift(newPost)
+        this._state.profilePage.newPostText = ''
+        this._callSubscriber()
+    },
+    subscribe (observer: () => void) {
+        this._callSubscriber = observer
     }
 }
-
-export const addPost = ()=>{
-    const newPost = {
-        id:123,
-        post:state.profilePage.newPostText,
-        likesCount:0,
-    }
-    state.profilePage.postData.push(newPost)
-    state.profilePage.newPostText=""
-    rerender()
-}
-export const  updateNewPostTest = (text:string) =>{
-    state.profilePage.newPostText= text
-    rerender()
-}
-
-export default state
+export default store

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, ChangeEventHandler, LegacyRef, RefObject} from 'react';
+import React, {ChangeEvent} from 'react';
 import Post from './Post/Post';
 import s from './MyPosts.module.css';
 import {AddPostFunctionType, profilePageType, updateNewPostTestType} from '../../../redux/state';
@@ -13,16 +13,16 @@ type myPostsPropsType = {
 
 const MyPosts = (props: myPostsPropsType) => {
     let postDataElements: JSX.Element[] = props.postData.postData.map(post => <Post key={post.id} message={post.post}
-                                                                           likecouns={post.likesCount}/>)
+                                                                                    likecouns={post.likesCount}/>)
 
     const newPostElement = React.createRef<HTMLTextAreaElement>()
-    const addPost = ()=>{
-        if( newPostElement.current){
+    const addPost = () => {
+        if (newPostElement.current) {
             props.addPost()
         }
     }
 
-    const onChangeTextaret = (e:ChangeEvent<HTMLTextAreaElement>)=>{
+    const onChangeTextaret = (e: ChangeEvent<HTMLTextAreaElement>) => {
         props.updateNewPostTest(e.currentTarget.value)
     }
     return (

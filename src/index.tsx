@@ -1,15 +1,15 @@
 import React from 'react';
 import './index.css';
-import state, {addPost, stateType, subscribe, updateNewPostTest} from './redux/state';
-import ReactDOM from 'react-dom';
-import App from './App';
+import store from './redux/state';
+import {rerender} from './render';
 
 
-let rerender = ()=> {
-    ReactDOM.render(
-        <App addPost={addPost} updateNewPostTest={updateNewPostTest} state={state}/>,
-        document.getElementById('root')
-    );
-}
-rerender()
-subscribe(rerender)
+// let rerender = (state:rerenderTypeProps) {
+//     ReactDOM.render(
+//             <App addPost={store.addPost} updateNewPostTest={store.updateNewPostTest} state={store.getState()}/>,
+//         document.getElementById('root')
+//     );
+// }
+
+store.subscribe(rerender)
+rerender();
