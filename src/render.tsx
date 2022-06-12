@@ -1,11 +1,11 @@
 import ReactDOM from 'react-dom';
 import App from './App';
-import store, {stateType} from './redux/state';
+import store from './redux/redux-store';
 import React from 'react';
 
-export const rerender = ()=> {
+export const rerender = ( )=> {
     ReactDOM.render(
-        <App store={store}/>,
+        <App dispatch={store.dispatch.bind(store.getState())} store={store.getState()}/>,
         document.getElementById('root')
     );
 }

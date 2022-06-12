@@ -8,23 +8,29 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import {storeType} from './redux/state';
+import {dispatchActionType, messagePageType, profilePageType, sideBarType, stateType} from './redux/redux-store';
+
+
 
 type appPropsType={
-    store:storeType;
+    store: stateType
+    dispatch: (action:dispatchActionType) => void
 }
 function App(props:appPropsType) {
+    console.log(props)
+    //debugger
     return (
         <BrowserRouter>
             <div className="app-wrapper">
                 <Header/>
-                <Navbar friendsList={props.store._state.sideBar.friends}/>
+                <Navbar friendsList={props.store.sideBar.friends}/>
+                {/*<Navbar friendsList={props.store.state.sideBar.friends}/>*/}
                 <div className="app-wrapper-content">
-                    <Route path='/profile' render={ ()=><Profile dispatch={props.store.dispatch.bind(props.store)} postData={props.store._state.profilePage} />}/>
+                    <Route path='/profile' render={ ()=><Profile dispatch={props.dispatch} postData={props.store.profilePage} />}/>
                     <Route path='/news' render={News}/>
                     <Route path='/music' render={Music}/>
                     <Route path='/settings' render={Settings}/>
-                    <Route path='/dialogs' render={ ()=><Dialogs dispatch={props.store.dispatch.bind(props.store)} messageText={props.store._state.messageDataPage.newMessageText} messageData={props.store._state.messageDataPage.messageData} dialogsData={props.store._state.messageDataPage.dialogsData}/> }/>
+                    <Route path='/dialogs' render={ ()=><Dialogs dispatch={props.dispatch} messageText={props.store.messageDataPage.newMessageText} messageData={props.store.messageDataPage.messageData} dialogsData={props.store.messageDataPage.dialogsData}/> }/>
                 </div>
 
 

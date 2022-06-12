@@ -1,9 +1,19 @@
-import {dispatchActionType, profilePageType} from './state';
+import {dispatchActionType, profilePageType} from './redux-store';
+
 
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 
-export const profileReducer = (state:profilePageType, action:dispatchActionType) =>{
+let initialState ={
+            postData: [
+                {id: 1, post: 'How are you', likesCount: 12},
+                {id: 2, post: 'Hello world', likesCount: 2},
+                {id: 3, post: 'test', likesCount: 0}
+            ],
+            newPostText: '',
+}
+export const profileReducer = (state:profilePageType = initialState, action:dispatchActionType) =>{
+    debugger
     switch (action.type) {
         case ADD_POST:
             const newPost = {
@@ -13,12 +23,15 @@ export const profileReducer = (state:profilePageType, action:dispatchActionType)
             }
             state.postData.unshift(newPost)
             state.newPostText = ''
+            return state
             break;
         case UPDATE_NEW_POST_TEXT:
             state.newPostText = action.newText
+            return state
             break;
         default: return state;
     }
+    //return state;
 }
 
 export type addPostActionType = ReturnType<typeof addPostAction>

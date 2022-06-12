@@ -2,7 +2,7 @@ import React from 'react';
 import s from './Post.module.css';
 
 type messageType = {
-    message: string,
+    message: string | undefined,
     likecouns: number,
 }
 
