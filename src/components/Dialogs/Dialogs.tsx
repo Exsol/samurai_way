@@ -4,14 +4,15 @@ import DialogItem from './Dialog/DialogItem';
 import Message from './Message/Message';
 import Button from '../Elements/Button/Button';
 import {AddMessageCreator, updateNewMessageActionCreators} from '../../redux/messages-reducer';
-import {dialogsDataType, dispatchActionType, messageDataType} from '../../redux/redux-store';
+import {dialogsDataType, dispatchActionType, messageDataType, storeType} from '../../redux/redux-store';
 
 
 
 type dialogTypeProps={
+    newPostElement: ()=>void
+    addMessage: (message:string)=>void
     dialogsData: Array<dialogsDataType>
     messageData: Array<messageDataType>
-    dispatch:(action:dispatchActionType)=>void
     messageText:string
 }
 const Dialogs = (props:dialogTypeProps) => {
@@ -20,16 +21,15 @@ const Dialogs = (props:dialogTypeProps) => {
     let messageElements:JSX.Element[] = props.messageData.map(message=><Message key={message.id} avatar={message.avatar} itsMy={message.itsMy} message={message.message}  /> )
 
     const addMessage=(e:ChangeEvent<HTMLTextAreaElement>)=>{
-        props.dispatch(updateNewMessageActionCreators(e.currentTarget.value))
+        props.addMessage(e.currentTarget.value)
     }
 
     const newPostElement = React.createRef<HTMLTextAreaElement>()
     const sendMessage = () => {
-            props.dispatch(AddMessageCreator());
+        props.newPostElement()
     }
     return (
         <div className={s.dialogs}>
-
                 <div className={s.dialogs_item}>
                     {dialogsElement}
                 </div>

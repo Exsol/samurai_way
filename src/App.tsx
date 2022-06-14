@@ -11,6 +11,7 @@ import Settings from './components/Settings/Settings';
 import {
     dispatchActionType, storeType
 } from './redux/redux-store';
+import DialogsContainer from './components/Dialogs/DialogsContainer';
 
 
 
@@ -33,7 +34,7 @@ function App(props:appPropsType) {
                     <Route path='/music' render={Music}/>
                     <Route path='/settings' render={Settings}/>
                     {/*<Route path='/dialogs' render={ ()=><Dialogs dispatch={props.dispatch} messageText={props.store.messageDataPage.newMessageText} messageData={props.store.messageDataPage.messageData} dialogsData={props.store.messageDataPage.dialogsData}/> }/>*/}
-                    <Route path='/dialogs' render={ ()=><Dialogs messageData={props.store.messageDataPage.messageData} dialogsData={props.store.messageDataPage.dialogsData}/> }/>
+                    <Route path='/dialogs' render={ ()=><DialogsContainer store={props.store}/> }/>
                 </div>
 
 
