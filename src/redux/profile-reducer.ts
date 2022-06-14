@@ -13,7 +13,6 @@ let initialState ={
             newPostText: '',
 }
 export const profileReducer = (state:profilePageType = initialState, action:dispatchActionType) =>{
-    debugger
     switch (action.type) {
         case ADD_POST:
             const newPost = {

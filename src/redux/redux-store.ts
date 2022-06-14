@@ -51,6 +51,7 @@ export type storeType = {
     _callSubscriber: () => void
     subscribe: (observer: () => void) => void
     dispatch: (action:dispatchActionType) => void
+    rerender?:()=>void
 }
 
 

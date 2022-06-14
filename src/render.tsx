@@ -5,7 +5,7 @@ import React from 'react';
 
 export const rerender = ( )=> {
     ReactDOM.render(
-        <App dispatch={store.dispatch.bind(store.getState())} store={store.getState()}/>,
+        <App dispatch={store.dispatch.bind(store.getState())} store={store}/>,
         document.getElementById('root')
     );
 }

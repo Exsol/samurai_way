@@ -1,16 +1,15 @@
 import React, {ChangeEvent} from 'react';
 import Post from './Post/Post';
 import s from './MyPosts.module.css';
-
-import {addPostAction, updateNewPostTextCreator} from '../../../redux/profile-reducer';
-import {dispatchActionType, profilePageType} from '../../../redux/redux-store';
+import { profilePageType} from '../../../redux/redux-store';
 
 
 
 type myPostsPropsType = {
     postData: profilePageType
     newPostText: string;
-    dispatch: (action: dispatchActionType) => void | undefined;
+    updateNewPostText: (text:string)=>void
+    addPost: ()=>void
 }
 
 const MyPosts = (props: myPostsPropsType) => {
@@ -20,11 +19,12 @@ const MyPosts = (props: myPostsPropsType) => {
     const newPostElement = React.createRef<HTMLTextAreaElement>()
     const addPost = () => {
         if (newPostElement.current) {
-            props.dispatch(addPostAction())
+            props.addPost();
         }
     }
     const onChangeTextarea = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(updateNewPostTextCreator(e.currentTarget.value))
+
+        props.updateNewPostText(e.currentTarget.value);
     }
     return (
         <div className={s.postsBlock}>
