@@ -67,7 +67,7 @@ export type storeReduxType = {
     _callSubscriber?: () => void
     subscribe: (observer: () => void) => void
     dispatch: (action:dispatchActionType) => void
-    replaceReducer: (a:any)=>void
+    replaceReducer: (a:string)=>void
 }
 
 let store:storeType = createStore(reducers);

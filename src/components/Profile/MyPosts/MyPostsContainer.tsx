@@ -1,7 +1,7 @@
 import React from 'react';
 import {addPostAction, updateNewPostTextCreator} from '../../../redux/profile-reducer';
 import MyPosts from './MyPosts';
-import {profilePageType, stateType, storeType} from '../../../redux/redux-store';
+import {storeType} from '../../../redux/redux-store';
 
 
 type MyPostsContainerType ={

@@ -8,17 +8,11 @@ import Dialogs from './Dialogs';
 
 type dialogTypeProps={
     store: storeType
-
-    // dialogsData: Array<dialogsDataType>
-    // messageData: Array<messageDataType>
-    // dispatch:(action:dispatchActionType)=>void
-    // messageText:string
 }
 const DialogsContainer = (props:dialogTypeProps) => {
     let state = props.store.getState()
 
     const onAddMessage=(message:string)=>{
-        console.log(message)
         props.store.dispatch(updateNewMessageActionCreators(message))
     }
 
